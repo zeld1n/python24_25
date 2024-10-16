@@ -1,0 +1,139 @@
+class Veicolo:
+  def __init__(self, codice, marca, modello,prezzo, annoRevisione):
+    self.codice=codice
+    self.marca=marca
+    self.modello=modello
+    self.prezzo=prezzo
+    self.annoRevisione=annoRevisione
+
+
+  def scheda_veicolo(self):
+    return(str(f" Codice: {self.codice} \n Marca: {self.marca} \n Modello: {self.modello} \n Prezzo: {self.prezzo} \n Anno revisione: {self.annoRevisione}"))
+    #2 Ritorna una stringa contenente gli attributi del veicolo
+
+
+
+  def modifica_scheda(self):
+    self.codice=int(input("Inserisci il codice: "))
+    self.marca=input("Inserisci la marca: ")
+    self.modello=input("Inserisci il modello: ")
+    self.prezzo=float(input("Inserisci il prezzo: "))
+    self.annoRevisione=float(input("Inserisci anno revisione: "))
+    
+
+class Automobile(Veicolo):
+    def __init__(self, codice, marca, modello,prezzo, annoRevisione,lunghezza,larghezza):
+      super().__init__(codice, marca, modello,prezzo, annoRevisione)
+      self.lunghezza=lunghezza
+      self.larghezza=larghezza
+
+
+    def scheda_veicolo(self):
+      return(str(f"{super().scheda_veicolo()}\n Lunghezza: {self.lunghezza} \n Larghezza: {self.larghezza} "))
+      
+    def modifica_scheda(self):
+      super().modifica_scheda()
+      self.lunghezza=float(input("Inserisci lunghezza: "))
+      self.larghezza=float(input("Inserisci larghezza: "))
+
+      
+
+
+
+class Motociclo(Veicolo):
+  def __init__(self, codice, marca, modello,prezzo, annoRevisione,tipo,potenza):
+    super().__init__(codice, marca, modello,prezzo, annoRevisione)
+    self.tipo=tipo
+    self.potenza=potenza
+
+
+  def scheda_veicolo(self):
+    return(str(f"{super().scheda_veicolo()}\n Tipo: {self.tipo} \n Potenza: {self.potenza} "))
+    
+
+
+class Vendita():
+  def __init__(self,codice,data, codiceVenditore):
+    self.codice=codice
+    self.data=data
+    self.codiceVenditore=codiceVenditore
+    self.listaAuto=[]
+    self.listaMoto=[]
+
+
+  def aggiungi_veicolo(self,veicolo):
+    if isinstance(veicolo,Automobile):
+      tipo_veicolo="automobile"
+      self.listaAuto.append(veicolo)
+      print("Aggiunta la macchina")
+
+    elif isinstance(veicolo,Motociclo):
+      tipo_veicolo="motociclo"
+      self.listaMoto.append(veicolo)
+      print("Aggiunta la moto")
+
+
+  def rimuovi_veicolo(self,veicolo):
+    i=0
+    j=0
+    if isinstance(veicolo,Automobile):
+        for auto in self.listaAuto:
+          if(auto.codice==veicolo.codice):
+            self.listaAuto.pop(i)
+            print("la macchina è stata cancellata")
+          i+=1
+    if isinstance(veicolo,Motociclo):
+        for moto in self.listaMoto:
+          if(moto.codice==veicolo.codice):
+            self.listaMoto.pop(j)
+            print("La moto è stata cancellata")
+          j+=1
+
+
+
+
+  def importo_vendita(self):
+    prezzoAuto=0
+    prezzoMoto=0
+    for auto in self.listaAuto:
+       prezzoAuto+=auto.prezzo
+    
+    for moto in self.listaMoto:
+       prezzoMoto+=moto.prezzo
+       
+    print("Numero veicoli: ",len(self.listaAuto)+len(self.listaMoto)    ,"Prezzo veicoli: ",prezzoMoto+prezzoAuto)
+    #11 Stampa il numero di veicoli e l'importo totale della vendita giornaliera
+
+
+
+  def dettaglio_vendita(self):
+    #12 Stampa il dettaglio della vendita e restituisce una lista contenente
+    # [somma importi automobili, somma importi motocicli, somma importi totali, provvigione ]
+    # e il totale della provvigione spettante al venditore sapendo che:
+    # per automobili la provvigione spettante è il 3% del prezzo di vendita
+    # per motocicli la provvigione spettante è il 2% del prezzo di vendita
+    #...
+
+
+
+    pass
+
+    #return([sommaA,sommaM,sommaA+sommaM,provvigione])
+
+
+
+a2 = Automobile(2,"Peugeot","Peugeot 2008",18000,2014,4.2,1.75)
+m1 = Motociclo(3,"Gilera","Gilera Runner 50",3500,2016,"Scooter",1200)
+m2 = Motociclo(4,"Honda","SW-T 400 – 2013",4500,2012,"Super Sport",1000)
+a1 = Automobile(1,"Audi","Audi Q3",25000,2015,4.5,1.85)
+
+vendita1=Vendita(1,"01/04/2022",'123')
+vendita1.aggiungi_veicolo(a1)
+vendita1.aggiungi_veicolo(a2)
+vendita1.aggiungi_veicolo(m1)
+vendita1.aggiungi_veicolo(m2)
+
+vendita1.rimuovi_veicolo(m2)
+vendita1.rimuovi_veicolo(m2)
+
+vendita1.importo_vendita()
